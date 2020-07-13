@@ -13,7 +13,7 @@ import scala.Tuple2;
 
 public class CustomPartitionerExample {
 public static void main(String[] args) {
-	System.setProperty("hadoop.home.dir", "C:\\softwares\\Winutils");
+	System.setProperty("hadoop.home.dir", "C:\\Users\\john_yang\\DevTools\\Hadoop");
 	SparkConf conf = new SparkConf().setMaster("local").setAppName("Partitioning");
 	JavaSparkContext jsc = new JavaSparkContext(conf);
 	
