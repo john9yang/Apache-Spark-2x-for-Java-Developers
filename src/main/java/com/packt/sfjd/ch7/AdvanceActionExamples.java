@@ -28,7 +28,7 @@ import scala.Tuple2;
 public class AdvanceActionExamples {
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		 System.setProperty("hadoop.home.dir", "E:\\hadoop");
+		System.setProperty("hadoop.home.dir", "C:\\Users\\john_yang\\DevTools\\Hadoop");
 		 SparkConf conf = new SparkConf().setMaster("local").setAppName("ActionExamples").set("spark.hadoop.validateOutputSpecs", "false").set("spark.scheduler.mode", "FAIR");
 			JavaSparkContext sparkContext = new JavaSparkContext(conf);
 			  Logger rootLogger = LogManager.getRootLogger();
@@ -51,8 +51,8 @@ public class AdvanceActionExamples {
 			System.out.println("Low::"+countAprox.getFinalValue().low());
 			System.out.println("Mean::"+countAprox.getFinalValue().mean());
 			System.out.println("Final::"+countAprox.getFinalValue().toString());
-			
-			
+
+
 			    List<Tuple2<String,Integer>> list = new ArrayList<Tuple2<String,Integer>>();
 			    list.add(new Tuple2<String,Integer>("a", 1));
 			    list.add(new Tuple2<String,Integer>("b", 2));
@@ -68,7 +68,7 @@ public class AdvanceActionExamples {
 					System.out.println("Low for "+entrySet.getKey()+" ::"+entrySet.getValue().low());
 					System.out.println("Mean for "+entrySet.getKey()+" ::"+entrySet.getValue().mean());
 					System.out.println("Final val for "+entrySet.getKey()+" ::"+entrySet.getValue().toString());
- 
+
 		      }
 		      
 		      //countByKeyApprox(long timeout, double confidence)
@@ -79,7 +79,7 @@ public class AdvanceActionExamples {
 					System.out.println("Low for "+entrySet.getKey()+" ::"+entrySet.getValue().low());
 					System.out.println("Mean for "+entrySet.getKey()+" ::"+entrySet.getValue().mean());
 					System.out.println("Final val for "+entrySet.getKey()+" ::"+entrySet.getValue().toString());
- 
+
 		      }
 
 		      //  countByKeyApprox(long timeout);
@@ -90,7 +90,7 @@ public class AdvanceActionExamples {
 					System.out.println("Low for key "+entrySet.getKey()._1()+" and value "+ entrySet.getKey()._2()+" ::"+entrySet.getValue().low());
 					System.out.println("Mean for key "+entrySet.getKey()._1()+" and value "+ entrySet.getKey()._2()+" ::"+entrySet.getValue().mean());
 					System.out.println("Final val for key "+entrySet.getKey()._1()+" and value "+ entrySet.getKey()._2()+" ::"+entrySet.getValue().toString());
- 
+
 		      }
  
 		      //  countByKeyApprox(long timeout, double confidence)
@@ -102,81 +102,81 @@ public class AdvanceActionExamples {
 					System.out.println("Mean for key "+entrySet.getKey()._1()+" and value "+ entrySet.getKey()._2()+" ::"+entrySet.getValue().mean());
 					System.out.println("Final val for key "+entrySet.getKey()._1()+" and value "+ entrySet.getKey()._2()+" ::"+entrySet.getValue().toString());
 
-		      }	
+		      }
 		      
 		      long countApprxDistinct = intRDD.countApproxDistinct(0.95);
 		      System.out.println("The approximate distinct element count is ::"+countApprxDistinct);
-		      
+
 		      JavaPairRDD<String, Long> approxCountOfKey = pairRDD.countApproxDistinctByKey(0.80);
 		      approxCountOfKey.foreach(new VoidFunction<Tuple2<String,Long>>() {
 				@Override
 				public void call(Tuple2<String, Long> tuple) throws Exception {
-					 System.out.println("The approximate distinct vlaues for Key :"+tuple._1()+" is ::"+tuple._2());					
+					 System.out.println("The approximate distinct vlaues for Key :"+tuple._1()+" is ::"+tuple._2());
 				}
 			});
-		     
-		      
-		      
+
+
+
 		      JavaRDD<Integer> intRDD1 = sparkContext.parallelize(Arrays.asList(1,4,3,5,7,6,9,10,11,13,16,20),4);
 		      JavaRDD<Integer> intRDD2 = sparkContext.parallelize(Arrays.asList(31,34,33,35,37,36,39,310,311,313,316,320),4);
-		      
+
 		      JavaFutureAction<Long> intCount = intRDD1.countAsync();
 		      System.out.println(" The async count for "+intCount);
-		      
-		      JavaFutureAction<List<Integer>> intCol = intRDD2.collectAsync();		     
+
+		      JavaFutureAction<List<Integer>> intCol = intRDD2.collectAsync();
 		      for(Integer val:intCol.get()){
-			      System.out.println("The collect val is "+val);			      
-			      } 
-		      
+			      System.out.println("The collect val is "+val);
+			      }
+
 		      JavaFutureAction<List<Integer>> takeAsync = intRDD.takeAsync(3);
 		       for( Integer val:takeAsync.get()) {
 		    	   System.out.println(" The async value of take is :: "+val);
 		       }
-		      
-		      intRDD.foreachAsync(new VoidFunction<Integer>() {				
+
+		      intRDD.foreachAsync(new VoidFunction<Integer>() {
 				@Override
 				public void call(Integer t) throws Exception {
 					System.out.println("The val is :"+t);
-					
+
 				}
 			});
-		      
-		      intRDD2.foreachAsync(new VoidFunction<Integer>() {					
+
+		      intRDD2.foreachAsync(new VoidFunction<Integer>() {
 					@Override
 					public void call(Integer t) throws Exception {
 						System.out.println("the val2 is :"+t);
-						
+
 					}
 				});
-		      
-		    	     
-		      
+
+
+
 		      List<Integer> lookupVal = pairRDD.lookup("a");
 		      for(Integer val:lookupVal){
 		    	  System.out.println("The lookup val is ::"+val);
 		      }
-		      	     
+
 		     int numberOfPartitions = intRDD2.getNumPartitions();
 		     System.out.println("The no of partitions in the RDD are ::"+numberOfPartitions);
-		      
+
 		     List<Partition> partitions = intRDD1.partitions();
 		     for(Partition part :partitions){
 		    	 System.out.println(part.toString());
 		    	 System.out.println(part.index());
-		    	
-		    
+
+
 		     }
 
 		     List<Integer>[] collectPart = intRDD1.collectPartitions(new int[]{1,2});
-		     System.out.println("The length of collectPart is "+collectPart.length);		     
-		     
+		     System.out.println("The length of collectPart is "+collectPart.length);
+
 		     for(List<Integer> i:collectPart){
 		    	 for(Integer it:i){
 		    		 System.out.println(" The val of collect is "+it);
 		    	 }
-		    	 
+
 		     }
-		     
+
 		     System.out.println(" The no of partitions are ::"+ intRDD1.getNumPartitions());
 		    
 	}

@@ -15,9 +15,9 @@ import scala.Tuple3;
 public class MapSideJoinBroadcast {
 
 	public static void main(String[] args) {
-
+		System.setProperty("hadoop.home.dir", "C:\\Users\\john_yang\\DevTools\\Hadoop");
 		SparkSession sparkSession = SparkSession.builder().master("local").appName("My App")
-				.config("spark.sql.warehouse.dir", "file:////C:/Users/sgulati/spark-warehouse").getOrCreate();
+				.config("spark.sql.warehouse.dir", "file:////C:/Users/john_yang/spark-warehouse").getOrCreate();
 
 		JavaSparkContext jsc = new JavaSparkContext(sparkSession.sparkContext());
 
