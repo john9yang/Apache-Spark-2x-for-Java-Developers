@@ -9,10 +9,12 @@ import org.apache.spark.sql.expressions.Aggregator;
 public class TypeSafeUDAF extends Aggregator<Employee, Average, Double> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public Average zero() {
 		return new Average(0L, 0L);
 	}
 
+	@Override
 	public Average reduce(Average buffer, Employee employee) {
 		double newSum = buffer.getSumVal() + employee.getSalary();
 		long newCount = buffer.getCountVal() + 1;
@@ -21,6 +23,7 @@ public class TypeSafeUDAF extends Aggregator<Employee, Average, Double> implemen
 		return buffer;
 	}
 
+	@Override
 	public Average merge(Average b1, Average b2) {
 		double mergedSum = b1.getSumVal() + b2.getSumVal();
 		long mergedCount = b1.getCountVal() + b2.getCountVal();
@@ -29,14 +32,15 @@ public class TypeSafeUDAF extends Aggregator<Employee, Average, Double> implemen
 		return b1;
 	}
 
+	@Override
 	public Double finish(Average reduction) {
 		return ((double) reduction.getSumVal()) / reduction.getCountVal();
 	}
-
+	@Override
 	public Encoder<Average> bufferEncoder() {
 		return Encoders.bean(Average.class);
 	}
-
+	@Override
 	public Encoder<Double> outputEncoder() {
 		return Encoders.DOUBLE();
 	}
