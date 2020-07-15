@@ -43,14 +43,14 @@ public class AverageUDAF extends UserDefinedAggregateFunction  {
 	@Override
 	public void update(MutableAggregationBuffer bufferAgg, Row row) {
 		bufferAgg.update(0, bufferAgg.getDouble(0)+row.getDouble(0));
-		bufferAgg.update(1, bufferAgg.getDouble(1)+2.0);
+		bufferAgg.update(1, bufferAgg.getDouble(1)+1.0);
 	}
 	
 	
 	@Override
 	public void merge(MutableAggregationBuffer bufferAgg, Row row) {
 		bufferAgg.update(0, bufferAgg.getDouble(0)+row.getDouble(0));
-		bufferAgg.update(1, bufferAgg.getDouble(1)+row.getDouble(1));		
+		bufferAgg.update(1, bufferAgg.getDouble(1)+row.getDouble(1));
 	}
 
 	

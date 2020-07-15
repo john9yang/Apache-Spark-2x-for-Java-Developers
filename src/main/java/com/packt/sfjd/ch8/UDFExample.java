@@ -15,13 +15,13 @@ public class UDFExample {
 
 	public static void main(String[] args) {
 		//Window Specific property if Hadoop is not instaalled or HADOOP_HOME is not set
-		 System.setProperty("hadoop.home.dir", "E:\\hadoop");
+		System.setProperty("hadoop.home.dir", "C:\\Users\\john_yang\\DevTools\\Hadoop");
 		
 		 //Build a Spark Session	
 	      SparkSession sparkSession = SparkSession
 	      .builder()
 	      .master("local")
-		  .config("spark.sql.warehouse.dir","file:///E:/hadoop/warehouse")
+		  .config("spark.sql.warehouse.dir","file:////C:/Users/john_yang/spark-warehouse")
 	      .appName("EdgeBuilder")
 	      .getOrCreate();
 	      Logger rootLogger = LogManager.getRootLogger();
@@ -52,11 +52,11 @@ public class UDFExample {
 		   
 		    //
 		    TypeSafeUDAF typeSafeUDAF=new TypeSafeUDAF();
-		    
+
 		    Dataset<Employee> emf = emp_ds.as(Encoders.bean(Employee.class));
 		    emf.printSchema();
 		    emf.show();
-		    
+
 		    TypedColumn<Employee, Double> averageSalary = typeSafeUDAF.toColumn().name("averageTypeSafe");
 		    Dataset<Double> result = emf.select(averageSalary);
 		   result.show();

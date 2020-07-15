@@ -17,7 +17,7 @@ public class SparkSessionExample {
 		.appName("Spark Session Example")
 		.enableHiveSupport()
 		.config("spark.driver.memory", "2G")
-		.config("spark.sql.warehouse.dir", "file:////C:/Users/sgulati/spark-warehouse")
+		.config("spark.sql.warehouse.dir", "file:////C:/Users/john_yang/spark-warehouse")
 		.getOrCreate();
 		
 		sparkSession.conf().set("spark.driver.memory", "3G");

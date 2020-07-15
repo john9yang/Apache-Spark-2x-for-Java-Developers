@@ -25,13 +25,13 @@ public class DatasetOperations {
 
 	public static void main(String[] args) throws AnalysisException {
 		//Window Specific property if Hadoop is not instaalled or HADOOP_HOME is not set
-		 System.setProperty("hadoop.home.dir", "E:\\hadoop");
+		System.setProperty("hadoop.home.dir", "C:\\Users\\john_yang\\DevTools\\Hadoop");
 		
 		 //Build a Spark Session	
 	      SparkSession sparkSession = SparkSession
 	      .builder()
 	      .master("local")
-		  .config("spark.sql.warehouse.dir","file:///E:/hadoop/warehouse")
+		  .config("spark.sql.warehouse.dir","file:////C:/Users/john_yang/spark-warehouse")
 	      .appName("DatasetOperations")
 	      //.enableHiveSupport()
 	      .getOrCreate();
